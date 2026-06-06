@@ -72,11 +72,6 @@ Arvutivõrgu eksami ülesanne, mille eesmärk oli ühendada kaks kohtvõrku GRE 
 
 ## Projekti failid
 
-### Packet Tracer
-
-- [Võrgu_pilet_2.pka](PacketTracer/Võrgu_pilet_2.pka)
-
-
 ### Seadmete konfiguratsioonid
 
 - [R1 konfiguratsioon](Configs/R1.txt)
