@@ -1,18 +1,30 @@
 # Arvutivõrgud – GRE Tunnel ja DHCP Relay
 
-## Projekti ülevaade
+Cisco Packet Traceri praktiline projekt, mille eesmärk oli ühendada kaks kohtvõrku GRE tunneli abil ning võimaldada DHCP teenuse kasutamine üle tunneli.
 
-Käesolev projekt on koostatud Cisco Packet Traceri praktilise ülesande lahendusena.
+---
 
-### Projekti eesmärgid
+## Projekti eesmärgid
 
 - Seadistada kaks kohtvõrku
-- Ühendada võrgud GRE tunneli abil
+- Luua GRE tunnel
 - Seadistada DHCP server
 - Kasutada DHCP Relay (IP Helper Address)
-- Seadistada staatiline marsruutimine
-- Võimaldada SSH kaudu haldamine
-- Testida ühenduvust kõikide seadmete vahel
+- Rakendada staatiline marsruutimine
+- Seadistada SSH haldus
+- Kontrollida ühenduvust kõikide seadmete vahel
+
+---
+
+## Võrgu topoloogia
+
+### Algne topoloogia
+
+![Algne PacketTracer](Screenshots/Algne%20PacketTracer.png)
+
+### Lõplik topoloogia
+
+![Valmis PacketTracer](Screenshots/Valmis%20PacketTracer.png)
 
 ---
 
@@ -32,36 +44,6 @@ Käesolev projekt on koostatud Cisco Packet Traceri praktilise ülesande lahendu
 
 ---
 
-## Võrgu topoloogia
-
-### Lõplik topoloogia
-
-![Topoloogia](Screenshots/Topologia_Valmis.png)
-
-### Algne topoloogia
-
-![Algne topoloogia](Screenshots/Topologia_Algne.png)
-
----
-
-## Kaabeldus
-
-### WAN ühendused
-
-| Seade | Liides | Seade | Liides |
-|---------|---------|---------|---------|
-| R1 | Serial0/0/0 | R3 | Serial0/0/0 |
-| R2 | Serial0/0/1 | R3 | Serial0/0/1 |
-
-### LAN ühendused
-
-| Seade | Liides | Seade | Liides |
-|---------|---------|---------|---------|
-| R1 | GigabitEthernet0/0 | S1 | FastEthernet0/1 |
-| R2 | GigabitEthernet0/0 | S2 | FastEthernet0/1 |
-
----
-
 ## IP-aadresside plaan
 
 | Seade | Liides | IP-aadress |
@@ -77,119 +59,76 @@ Käesolev projekt on koostatud Cisco Packet Traceri praktilise ülesande lahendu
 
 ---
 
-## DHCP seadistus
+## Tehnoloogiad
 
-DHCP server asub ruuteril **R1**.
+- GRE Tunnel
+- DHCP Server
+- DHCP Relay (IP Helper Address)
+- Staatiline marsruutimine
+- SSH haldus
+- Cisco IOS
 
-### Välistatud aadressid
+---
+
+## Projekti failid
+
+### Packet Tracer
+
+- [Võrgu_pilet_2.pka](PacketTracer/Võrgu_pilet_2.pka)
+
+### Dokumentatsioon
+
+- [Arvutivorgud eksami dokumentatsioon.docx](Arvutivorgud%20eksami%20dokumentatsioon.docx)
+
+### Seadmete konfiguratsioonid
+
+- [R1 konfiguratsioon](Configs/R1.txt)
+- [R2 konfiguratsioon](Configs/R2.txt)
+- [R3 konfiguratsioon](Configs/R3.txt)
+- [S1 konfiguratsioon](Configs/S1.txt)
+- [S2 konfiguratsioon](Configs/S2.txt)
+
+---
+
+## Olulisemad seadistused
+
+### GRE Tunnel
 
 ```cisco
-ip dhcp excluded-address 192.168.5.1 192.168.5.10
-ip dhcp excluded-address 192.168.6.1 192.168.6.10
+R1 Tunnel1: 10.0.0.2/30
+R2 Tunnel1: 10.0.0.1/30
 ```
 
-### DHCP Pool LAN
+### DHCP Relay
 
 ```cisco
-ip dhcp pool LAN
- network 192.168.5.0 255.255.255.128
- default-router 192.168.5.1
- dns-server 1.1.1.1
- domain-name too.net
+ip helper-address 192.168.5.1
 ```
 
-### DHCP Pool LAN1
+### Staatiline marsruutimine
 
 ```cisco
-ip dhcp pool LAN1
- network 192.168.6.0 255.255.255.128
- default-router 192.168.6.1
- dns-server 1.1.1.1
- domain-name too.net
+R1 -> 192.168.6.0/25 via 10.0.0.1
+R2 -> 192.168.5.0/25 via 10.0.0.2
 ```
 
 ---
 
-## GRE Tunnel
+## Testimine
 
-### R1
+Kontrollitud:
 
-```cisco
-interface Tunnel1
- ip address 10.0.0.2 255.255.255.252
- tunnel source Serial0/0/0
- tunnel destination 194.25.10.42
-```
-
-### R2
-
-```cisco
-interface Tunnel1
- ip address 10.0.0.1 255.255.255.252
- tunnel source Serial0/0/1
- tunnel destination 201.10.23.1
-```
+- GRE tunneli töö
+- DHCP aadresside jagamine
+- DHCP Relay töö
+- LAN-võrkude vaheline ühenduvus
+- SSH ühendused
+- Staatiline marsruutimine
 
 ---
 
-## DHCP Relay
+## Autor
 
-Kuna DHCP server asub R1 peal, kasutatakse R2 LAN-võrgus DHCP Relay lahendust.
+**Anneli Tikerber**
 
-```cisco
-interface GigabitEthernet0/0
- ip helper-address 192.168.5.1
-```
-
----
-
-## Staatiline marsruutimine
-
-### R1
-
-```cisco
-ip route 192.168.6.0 255.255.255.128 10.0.0.1
-ip route 0.0.0.0 0.0.0.0 201.10.23.2
-```
-
-### R2
-
-```cisco
-ip route 192.168.5.0 255.255.255.128 10.0.0.2
-ip route 0.0.0.0 0.0.0.0 194.25.10.41
-```
-
----
-
-## SSH seadistus
-
-```cisco
-username admin privilege 15 secret Passw0rd!
-ip domain-name too.net
-
-crypto key generate rsa
-1024
-```
-
-```cisco
-line vty 0 15
- login local
- transport input ssh
-```
-
----
-
-## Tööjaamade seadistamine
-
-Kõik tööjaamad kasutavad DHCP konfiguratsiooni.
-
-- PC0 → Desktop → IP Configuration → DHCP
-- PC1 → Desktop → IP Configuration → DHCP
-- PC2 → Desktop → IP Configuration → DHCP
-- PC3 → Desktop → IP Configuration → DHCP
-
----
-
-## Konfiguratsioonifailid
-
-- [R
+Cisco Packet Tracer – Arvutivõrgud
