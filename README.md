@@ -76,9 +76,6 @@ Cisco Packet Traceri praktiline projekt, mille eesmärk oli ühendada kaks kohtv
 
 - [Võrgu_pilet_2.pka](PacketTracer/Võrgu_pilet_2.pka)
 
-### Dokumentatsioon
-
-- [Arvutivorgud eksami dokumentatsioon.docx](Arvutivorgud%20eksami%20dokumentatsioon.docx)
 
 ### Seadmete konfiguratsioonid
 
@@ -127,8 +124,3 @@ Kontrollitud:
 
 ---
 
-## Autor
-
-**Anneli Tikerber**
-
-Cisco Packet Tracer – Arvutivõrgud
