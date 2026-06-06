@@ -1,6 +1,6 @@
 # Arvutivõrgud – GRE Tunnel ja DHCP
 
-Arvutivõrgu eksami ülessanne, mille eesmärk oli ühendada kaks kohtvõrku GRE tunneli abil ning võimaldada DHCP teenuse kasutamine üle tunneli.
+Arvutivõrgu eksami ülesanne, mille eesmärk oli ühendada kaks kohtvõrku GRE tunneli abil ning võimaldada DHCP teenuse kasutamine üle tunneli.
 
 ---
 
