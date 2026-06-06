@@ -1,10 +1,10 @@
-# Arvutivõrgud – GRE Tunnel ja DHCP Relay
+# Arvutivõrgud – GRE Tunnel ja DHCP
 
-Cisco Packet Traceri praktiline projekt, mille eesmärk oli ühendada kaks kohtvõrku GRE tunneli abil ning võimaldada DHCP teenuse kasutamine üle tunneli.
+Arvutivõrgu eksami ülessanne, mille eesmärk oli ühendada kaks kohtvõrku GRE tunneli abil ning võimaldada DHCP teenuse kasutamine üle tunneli.
 
 ---
 
-## Projekti eesmärgid
+## Eksami eesmärgid
 
 - Seadistada kaks kohtvõrku
 - Luua GRE tunnel
