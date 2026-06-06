@@ -4,7 +4,7 @@ Cisco Packet Traceri praktiline projekt, mille eesmärk oli ühendada kaks kohtv
 
 ## Võrgu topoloogia
 
-![Lõplik topoloogia](Screenshots/Topologia_Valmis.png)
+![Lõplik topoloogia](Screenshots/Valmis PacketTracer.png)
 
 ## Dokumentatsioon
 
